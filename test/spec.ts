@@ -63,6 +63,8 @@ describe('CognacPipeline', () => {
       , fakeMiddleware3
       , sink
       , processed
+      , fakeOnContextCreate
+      , fakeOnDone
 
     beforeEach(() => {
       processed = []
@@ -98,6 +100,9 @@ describe('CognacPipeline', () => {
         processed.push('sink')
       })
 
+      fakeOnContextCreate = stub(source, 'onContextCreate')
+      fakeOnDone = stub(source, 'onDone')
+
       pipeline.add(fakeMiddleware1)
       pipeline.add(fakeMiddleware2)
       pipeline.add(fakeMiddleware3)
@@ -111,6 +116,8 @@ describe('CognacPipeline', () => {
       expect(fakeMiddleware2.called).to.be.true
       expect(fakeMiddleware3.called).to.be.true
       expect(sink.called).to.be.true
+      expect(fakeOnContextCreate.called).to.be.true
+      expect(fakeOnDone.called).to.be.true
 
       expect(processed).to.eql([1, 2, 3, 'sink'])
     })
