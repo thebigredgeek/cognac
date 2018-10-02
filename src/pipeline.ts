@@ -6,7 +6,7 @@ import { CognacContext } from './context'
 export class CognacPipeline<T> extends EventEmitter {
   private middleware = []
   constructor (
-    private source: CognacSourceInterface<T>
+    public source: CognacSourceInterface<T>
   ) {
     super()
     this.source.subscribe(this.exec.bind(this))
